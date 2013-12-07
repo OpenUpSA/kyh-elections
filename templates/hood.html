@@ -1,0 +1,30 @@
+<html>
+<body>
+<h1>2009 Voting in your Ward</h1>
+<table>
+    <tbody>
+        <tr><td>Registered Voters</td><td>{{ summary.registered_voters }}</td></tr>
+        <tr><td>Total Votes</td><td>{{ summary.total_votes }}</td></tr>
+        <tr><td>Percentage Turnout</td><td>{{ "%.02f" % summary.voter_turnout_perc }}%</td></tr>
+    </tbody>
+</table>
+
+{{ summary.parties.items }}
+<h2>Votes by Party<h2>
+<table>
+    <thead>
+        <tr>
+            <th>Party</th><th>Votes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for party, votes in summary.parties.items() %}
+        <tr>
+            <td>{{ party }}</td>
+            <td>{{ votes }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
