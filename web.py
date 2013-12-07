@@ -25,5 +25,5 @@ For example, try:  <a href="/?address=12 Thicket St, Cape Town">12 Thicket stree
 """
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
         

@@ -12,11 +12,14 @@ def vote_summary(address):
     iec = IEC(iec_url)
 
     summary = iec.wardsummary(ward=ward)
+    summary["address"] = js["address"]
     return summary
 
 if __name__ == "__main__":
     input = raw_input("Please enter in your address: ")
+    vs = vote_summary(input)
 
+    print(vs["address"])
     print("=" * 10)
     print("Special Votes: %d" % vs["special_votes"])
     print("Registered Voters: %d" % vs["registered_voters"])
