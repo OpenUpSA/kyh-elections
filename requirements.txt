@@ -7,4 +7,4 @@ itsdangerous==0.23
 requests==2.1.0
 wsgiref==0.1.2
 gunicorn
-mixpanel
+mixpanel-py==3.0.0
