@@ -1,85 +1,53 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Know Your Hood</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Bootstrap -->
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+{% extends "base.html" %}
+{% block content %}
+<div class="header">
+    <h3 class="text-muted text-center">
+        Voting in your neighbourhood<br/>
+        <small>Data from the 2009 General Elections</small>
+    </h3>
+    <h4 class="text-center text-muted">Address: {{ summary.address }}</div></h4>
+</div>
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<div class="row marketing">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-4">
+        <h4>Summary</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th><th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Registered Voters</td><td>{{ summary.registered_voters }}</td></tr>
+                <tr><td>Total Votes</td><td>{{ summary.total_votes }}</td></tr>
+                <tr><td>Percentage Turnout</td><td>{{ "%.02f" % summary.voter_turnout_perc }}%</td></tr>
+            </tbody>
+        </table>
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <h3 class="text-muted text-center">
-                    Voting in your neighbourhood<br/>
-                    <small>Data from the 2009 General Elections</small>
-                </h3>
-                <h4 class="text-center text-muted">Address: {{ summary.address }}</div></h4>
-            </div>
+    </div>
 
-            <div class="row marketing">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-4">
-                    <h4>Summary</h4>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th></th><th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Registered Voters</td><td>{{ summary.registered_voters }}</td></tr>
-                            <tr><td>Total Votes</td><td>{{ summary.total_votes }}</td></tr>
-                            <tr><td>Percentage Turnout</td><td>{{ "%.02f" % summary.voter_turnout_perc }}%</td></tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <div class="col-lg-4">
-                    <h4>Top 5 Parties</h4>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Party</th><th>Votes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for party, votes in summary.parties.items()[-5:] %}
-                            <tr>
-                                <td>{{ party }}</td>
-                                <td>{{ votes }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-lg-2"></div>
-            </div> <!-- row -->
-            <div class="row marketing">
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6">
-                    <form class="form-inline" role="form">
-                      <div class="form-group col-xs-9">
-                        <label class="sr-only" for="address">Address</label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="Enter your address">
-                      </div>
-                      <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                </div>
-                <div class="col-lg-3"></div>
-            </div>
+    <div class="col-lg-4">
+        <h4>Top 5 Parties</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Party</th><th>Votes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for party, votes in summary.parties.items()[-5:] %}
+                <tr>
+                    <td>{{ party }}</td>
+                    <td>{{ votes }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-2"></div>
+</div> <!-- row -->
+{% include 'search_form.html' %}
+</div>
             
-        </div> <!-- /container -->
-    </body>
-</html>
+{% endblock %}

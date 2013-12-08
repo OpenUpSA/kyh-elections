@@ -11,7 +11,10 @@ def vote_summary():
     address = request.args.get("address")
     if address:
         summary = votes.vote_summary(address)
-        return render_template("hood.html", summary=summary)
+        if summary:
+            return render_template("hood.html", summary=summary)
+        else:
+            return render_template("not_found.html", summary=summary)
     else:
         return render_template("search.html")
 
