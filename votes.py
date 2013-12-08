@@ -1,6 +1,7 @@
 from __future__ import print_function
 import requests
 from client import IEC
+from track import track
 
 a2w_url = "http://wards.code4sa.org/?address=%s"
 iec_url  = "http://iec.code4sa.org"
@@ -8,13 +9,26 @@ iec_url  = "http://iec.code4sa.org"
 
 def vote_summary(address):
     js = requests.get(a2w_url % address).json()
-    if "error" in js: return None
+    if "error" in js: 
+        track("Vote - Address Not Found", address=address)
+        return None
 
     ward = js["ward"]
     iec = IEC(iec_url)
 
     summary = iec.wardsummary(ward=ward)
+    if not summary:
+        track("Vote - Ward Not Found", 
+            address=js["address"], ward=js["ward"],
+            municipality=js["municipality"], province=js["province"]
+        )
+        return None
+
     summary.update(js)
+    track("Vote - Got results", user="anonymous", 
+        province=summary["province"], municipality=summary["municipality"],
+        ward=summary["ward"], address=summary["address"]
+    )
     return summary
 
 if __name__ == "__main__":

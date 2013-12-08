@@ -42,7 +42,9 @@ class IEC(object):
 
     def wardsummary(self, ward):
         counts = defaultdict(int)
-        results = self.resultsummaries(ward=ward)
+        results = list(self.resultsummaries(ward=ward))
+        if len(results) == 0:
+            return None
 
         for vd in results:
             for k, v in vd.items():
