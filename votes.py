@@ -14,7 +14,7 @@ def vote_summary(address):
     iec = IEC(iec_url)
 
     summary = iec.wardsummary(ward=ward)
-    summary["address"] = js["address"]
+    summary.update(js)
     return summary
 
 if __name__ == "__main__":
