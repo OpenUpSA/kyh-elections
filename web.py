@@ -3,13 +3,14 @@ from flask import Flask
 from flask import render_template
 from flask import request
 import votes
-import analytics
+import mixpanel
 
-analytics.init('4645xq3bi2')
+mp = mixpanel.Mixpanel("9a4e6815ec7412d57cd0bbe18f7dcb58")
+
 app = Flask(__name__)
 
-def track(action, user="anonymous", **kwargs)
-    analytics.track(user, action, kwargs)
+def track(action, user="anonymous", **kwargs):
+    mp.track(user, action, kwargs)
 
 @app.route("/", methods=["GET"])
 def vote_summary():
@@ -17,7 +18,10 @@ def vote_summary():
     if address:
         summary = votes.vote_summary(address)
         if summary:
-            track("Vote - Got results", user="anonymous", **summary)
+            track("Vote - Got results", user="anonymous", 
+                province=summary["province"], municipality=summary["municipality"],
+                ward=summary["ward"], address=summary["address"]
+            )
             return render_template("hood.html", summary=summary)
         else:
             track("Vote - Address Not Found", address=address)
@@ -27,5 +31,5 @@ def vote_summary():
         return render_template("search.html")
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
         
