@@ -8,6 +8,8 @@ iec_url  = "http://iec.code4sa.org"
 
 def vote_summary(address):
     js = requests.get(a2w_url % address).json()
+    if "error" in js: return None
+
     ward = js["ward"]
     iec = IEC(iec_url)
 
@@ -18,18 +20,20 @@ def vote_summary(address):
 if __name__ == "__main__":
     input = raw_input("Please enter in your address: ")
     vs = vote_summary(input)
+    if not vs:
+        print("Could not find address")
+    else:
+        print(vs["address"])
+        print("=" * 10)
+        print("Special Votes: %d" % vs["special_votes"])
+        print("Registered Voters: %d" % vs["registered_voters"])
+        print("Section 24A Votes: %d" % vs["section_24a_votes"])
+        print("Spoilt Votes: %d" % vs["spoilt_votes"])
+        print("Voter Turnout: %d%%" % vs["voter_turnout_perc"])
+        print("Total Votes: %.2f" % vs["total_votes"])
 
-    print(vs["address"])
-    print("=" * 10)
-    print("Special Votes: %d" % vs["special_votes"])
-    print("Registered Voters: %d" % vs["registered_voters"])
-    print("Section 24A Votes: %d" % vs["section_24a_votes"])
-    print("Spoilt Votes: %d" % vs["spoilt_votes"])
-    print("Voter Turnout: %d%%" % vs["voter_turnout_perc"])
-    print("Total Votes: %.2f" % vs["total_votes"])
-
-    print("Votes")
-    for party, votes in sorted(vs["parties"].items(), key=lambda x: x[1]):
-        print("%s: %d" % (party, votes))
-    print("")
+        print("Votes")
+        for party, votes in sorted(vs["parties"].items(), key=lambda x: x[1]):
+            print("%s: %d" % (party, votes))
+        print("")
 
