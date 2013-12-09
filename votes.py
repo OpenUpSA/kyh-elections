@@ -9,8 +9,8 @@ iec_url = "http://iec.code4sa.org"
 
 
 def vote_summary(address):
-    url = a2w_url.format(address=address, database=config.database)
-    js = requests.get(a2w_url % address).json()
+    url = a2w_url.format(address=address, database=database)
+    js = requests.get(url).json()
     if "error" in js: 
         track("Vote - Address Not Found", address=address)
         return None
