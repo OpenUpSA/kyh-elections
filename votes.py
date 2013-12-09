@@ -3,11 +3,13 @@ import requests
 from client import IEC
 from track import track
 
-a2w_url = "http://wards.code4sa.org/?address=%s"
-iec_url  = "http://iec.code4sa.org"
+database = "wards_2006"
+a2w_url = "http://wards.code4sa.org/?address={address}&database={database}"
+iec_url = "http://iec.code4sa.org"
 
 
 def vote_summary(address):
+    url = a2w_url.format(address=address, database=config.database)
     js = requests.get(a2w_url % address).json()
     if "error" in js: 
         track("Vote - Address Not Found", address=address)
