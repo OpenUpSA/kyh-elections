@@ -40,6 +40,9 @@ class IEC(object):
     def resultsummaries(self, **kwargs):
         return self._paginate("result_summaries", kwargs)
 
+    def votes_by_ward(self, ward):
+        return self._paginate("votes/by_ward", {"ward" : ward})
+
     def wardsummary(self, ward):
         counts = defaultdict(int)
         results = list(self.resultsummaries(ward=ward))
@@ -54,8 +57,9 @@ class IEC(object):
         results = self.results(ward=ward)
 
         parties = defaultdict(int)
-        for r in results:
-            parties[r["party"]["name"]] += r["votes"]
+        votes = self.votes_by_ward(ward).next()
+        for r in votes["votes"]:
+            parties[r["party"]] += r["votes"]
                 
         counts["parties"] = OrderedDict(sorted(parties.items(), key=lambda x: x[1]))
         return dict(counts)
@@ -69,7 +73,8 @@ if __name__ == "__main__":
     #print list(iec.wards(province="Gauteng"))
     #print list(iec.voting_districts(ward="41602001"))
     #print list(iec.results(ward="41602001"))
-    print(list(iec.resultsummaries(ward="19100058")))
+    #print(list(iec.resultsummaries(ward="19100058")))
+    print(iec.wardsummary(ward="19100058"))
     #for summary in iec.resultsummaries(province="Gauteng"):
     #    print summary["voting_district"], summary["voter_turnout_perc"]
 
