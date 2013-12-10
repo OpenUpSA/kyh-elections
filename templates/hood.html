@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for party, votes in summary.parties.items()[-5:] %}
+                {% for party, votes in summary.parties.items()[-5:]|reverse %}
                 <tr>
                     <td>{{ party }}</td>
                     <td>{{ votes }}</td>
