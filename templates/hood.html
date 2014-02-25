@@ -5,7 +5,7 @@
         Voting in your neighbourhood<br/>
         <small>Data from the 2009 General Elections</small>
     </h3>
-    <h4 class="text-center text-muted">Address: {{ summary.address }}</div></h4>
+    <h4 class="text-center text-muted">Address: {{ summary.address }}</h4>
 </div>
 
 <div class="row marketing">
@@ -19,8 +19,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Registered Voters</td><td>{{ summary.registered_voters }}</td></tr>
-                <tr><td>Total Votes</td><td>{{ summary.total_votes }}</td></tr>
+                <tr><td>Registered Voters</td><td>{{ "{:,}".format(summary.registered_voters) }}</td></tr>
+                <tr><td>Total Votes</td><td>{{ "{:,}".format(summary.total_votes) }}</td></tr>
                 <tr><td>Percentage Turnout</td><td>{{ "%.02f" % summary.voter_turnout_perc }}%</td></tr>
             </tbody>
         </table>
@@ -39,7 +39,12 @@
                 {% for party, votes in summary.parties.items()[-5:]|reverse %}
                 <tr>
                     <td>{{ party }}</td>
-                    <td>{{ votes }}</td>
+                    <td>{{ "{:,}".format(votes) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="votegraph_cell">
+                        <div class="votegraph" style="width: {{ "{:.0f}".format(votes / summary.total_votes * 100) }}%"></div>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
