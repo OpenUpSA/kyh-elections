@@ -15,7 +15,7 @@ def vote_summary(address):
         track("Vote - Address Not Found", address=address)
         return None
 
-    ward = js["ward"]
+    ward = js[0]["ward"]
     iec = IEC(iec_url)
 
     summary = iec.wardsummary(ward=ward)
@@ -26,7 +26,7 @@ def vote_summary(address):
         )
         return None
 
-    summary.update(js)
+    summary.update(js[0])
     track("Vote - Got results", user="anonymous", 
         province=summary["province"], municipality=summary["municipality"],
         ward=summary["ward"], address=summary["address"]
