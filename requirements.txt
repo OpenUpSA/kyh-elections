@@ -2,9 +2,10 @@ Flask==0.10.1
 Jinja2==2.7.1
 MarkupSafe==0.18
 Werkzeug==0.9.4
-argparse
+argparse==1.2.2
+gunicorn==19.1.1
 itsdangerous==0.23
+mixpanel-py==3.0.0
+newrelic==2.40.0.34
 requests==2.1.0
 wsgiref==0.1.2
-gunicorn
-mixpanel-py==3.0.0
