@@ -5,13 +5,13 @@ from track import track
 
 database = "wards_2006"
 a2w_url = "http://wards.code4sa.org/?address={address}&database={database}"
-iec_url = "http://iec.code4sa.org"
+iec_url = "http://election-api.code4sa.org"
 
 
 def vote_summary(address):
     url = a2w_url.format(address=address, database=database)
     js = requests.get(url).json()
-    if "error" in js: 
+    if "error" in js:
         track("Vote - Address Not Found", address=address)
         return None
 
@@ -20,14 +20,14 @@ def vote_summary(address):
 
     summary = iec.wardsummary(ward=ward)
     if not summary:
-        track("Vote - Ward Not Found", 
+        track("Vote - Ward Not Found",
             address=js["address"], ward=js["ward"],
             municipality=js["municipality"], province=js["province"]
         )
         return None
 
     summary.update(js[0])
-    track("Vote - Got results", user="anonymous", 
+    track("Vote - Got results", user="anonymous",
         province=summary["province"], municipality=summary["municipality"],
         ward=summary["ward"], address=summary["address"]
     )
