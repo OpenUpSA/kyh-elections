@@ -60,12 +60,12 @@ class IEC(object):
         votes = self.votes_by_ward(ward).next()
         for r in votes["votes"]:
             parties[r["party"]] += r["votes"]
-
+                
         counts["parties"] = OrderedDict(sorted(parties.items(), key=lambda x: x[1]))
         return dict(counts)
 
 if __name__ == "__main__":
-    iec = IEC("http://election-api.code4sa.org")
+    iec = IEC("http://iec.code4sa.org")
     #print list(iec.parties())
     #print list(iec.events())
     #print list(iec.provinces())
