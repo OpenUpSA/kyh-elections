@@ -1,1 +1,1 @@
-web: newrelic-admin run-program gunicorn --workers 2 --worker-class gevent web:app --log-file -
+web: newrelic-admin run-program gunicorn -w 4 web:app --log-file -
